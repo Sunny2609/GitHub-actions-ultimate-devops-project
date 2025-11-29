@@ -421,24 +421,13 @@ ultimate-devops-platform/
 
 ---
 
-# 🎓 Resume Summary (Copy/Paste)
+# 🎓 Resume Summary 
 
 > Built a production-grade DevOps platform with multiple microservices deployed on Kubernetes using Docker, GitHub Actions CI/CD pipelines, Prometheus/Grafana monitoring, Loki logging, Terraform IaC, autoscaling (HPA), self-healing, GitHub self-hosted runner, and secure container images. Implemented observability, automation, zero-downtime deployments, and SRE best practices across the stack.
 
 ---
 
-# 🧪 How Recruiters Can Evaluate My Work
 
-- Review CI/CD pipelines  
-- Inspect Kubernetes manifests  
-- Verify Docker containers  
-- Check monitoring dashboards  
-- Check commit history (daily activity)  
-- Check Terraform modules  
-- View logs using Loki  
-- Run load tests  
-
----
 
 # 🏁 Conclusion
 
