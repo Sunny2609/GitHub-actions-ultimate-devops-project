@@ -1,0 +1,32 @@
+name: CI - Build & Push Auth Service Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "services/auth-service/**"
+      - ".github/workflows/auth-service-docker.yml"
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+      - name: Log in to Github container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./services/auth-service
+          push: true
+          tags: |
+            ghcr.io/sunny2609/auth-service:latest
+            ghcr.io/sunny2609/auth-service:v1
