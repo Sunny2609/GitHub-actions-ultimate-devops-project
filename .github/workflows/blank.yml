@@ -1,5 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
+i
 name: CI
 on:
   push:
@@ -49,6 +48,6 @@ jobs:
           file: services/auth-service/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/auth-service:latest
-            ghcr.io/${{ github.repository_owner }}/auth-service:v2     
+            ghcr.io/${{ github.repository_owner | toLower }}/auth-service:latest
+            ghcr.io/${{ github.repository_owner | toLower }}/auth-service:v2     
 
