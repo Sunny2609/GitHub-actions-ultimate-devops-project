@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-
+i
 name: CI
 on:
   push:
@@ -27,5 +27,28 @@ jobs:
           pip install -r requirements.txt
       - name: Run tests
         run: pytest
-       
+  build-and-push:
+    needs: test-auth-service
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/auth-service
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Image
+        uses: docker/build-push-action@v5
+        with:
+          context: services/auth-service
+          file: services/auth-service/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/auth-service:latest
+            ghcr.io/${{ github.repository_owner }}/auth-service:v2     
 
