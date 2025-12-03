@@ -1,0 +1,10 @@
+[project]
+name = "auth-service"
+version = "0.1.0"
+description = "Authentication service for the Devops platform"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-v"
