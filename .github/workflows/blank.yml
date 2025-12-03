@@ -49,5 +49,5 @@ jobs:
           push: true
           tags: |
             ghcr.io/sunny2609/auth-service:latest
-            ghcr.io/sunny2609/auth-service:v2     
+            ghcr.io/sunny2609/auth-service:v3     
 
