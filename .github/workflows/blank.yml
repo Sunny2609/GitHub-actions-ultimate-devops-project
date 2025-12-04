@@ -56,25 +56,17 @@ jobs:
             ghcr.io/sunny2609/auth-service:${{ github.sha }}     
   deploy-to-dev:
     needs: build-and-push
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, dev]
 
     # Only run on main branch
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Deployment Plan
+      - name: Deploy auth-service to local dev environment
         run: |
-          echo "======================================="
-          echo "           DEV ENVIRONMENT DEPLOY"
-          echo "======================================="
-          echo ""
-          echo "1) Pull latest production image:"
-          echo "    docker pull ghcr.io/sunny2609/auth-service:latest "
-          echo ""
-          echo "2) Recreate service using docker-compose:"
-          echo "     docker compose down && docker compose up -d"
-          echo ""
-          echo "3) Verify endpoint after deploy:"
-          echo "      curl http://localhost:8000/health"
-          echo ""
-          echo " NOTE: This is a dry-run deploy "
-          echo "======================================="
+          echo "Using self hosted runner"
+          cd ~/deploy-env
+          docker compose pull
+          docker compose up -d
+          sleep 5
+          curl -f http://localhost:9000/health
+          echo "Deployment complete"
