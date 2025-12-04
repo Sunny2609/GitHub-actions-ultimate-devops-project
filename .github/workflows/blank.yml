@@ -1,10 +1,13 @@
 # Workflow
-name: CI
+name: Auth service CI/CD Pipeline
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+permissions:
+  contents: read
+  packages: write
 jobs:
   test-auth-service:
     runs-on: ubuntu-latest
@@ -49,5 +52,29 @@ jobs:
           push: true
           tags: |
             ghcr.io/sunny2609/auth-service:latest
-            ghcr.io/sunny2609/auth-service:v3     
+            ghcr.io/sunny2609/auth-service:v3
+            ghcr.io/sunny2609/auth-service:${{ github.sha }}     
+  deploy-to-dev:
+    needs: build-and-push
+    runs-on: ubuntu-latest
 
+    # Only run on main branch
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deployment Plan
+        run: |
+          echo "======================================="
+          echo "           DEV ENVIRONMENT DEPLOY"
+          echo "======================================="
+          echo ""
+          echo "1) Pull latest production image:"
+          echo "    docker pull ghcr.io/sunny2609/auth-service:latest "
+          echo ""
+          echo "2) Recreate service using docker-compose:"
+          echo "     docker compose down && docker compose up -d"
+          echo ""
+          echo "3) Verify endpoint after deploy:"
+          echo "      curl http://localhost:8000/health"
+          echo ""
+          echo " NOTE: This is a dry-run deploy "
+          echo "======================================="
